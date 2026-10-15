@@ -30,7 +30,7 @@ export default function SensorListScreen({ navigation }) {
     }
   }, []);
 
-  // Carrega ao abrir e atualiza em silêncio ao voltar da tela de detalhes.
+  
   useFocusEffect(
     useCallback(() => {
       carregar(primeiraVez.current);
@@ -38,7 +38,7 @@ export default function SensorListScreen({ navigation }) {
     }, [carregar])
   );
 
-  // Tipos distintos vindos do backend, sem repetir (ignora maiúsculas/minúsculas).
+  
   const tipos = useMemo(() => {
     const mapa = new Map();
     sensores.forEach((s) => {
@@ -47,7 +47,7 @@ export default function SensorListScreen({ navigation }) {
     return [...mapa.values()].sort((a, b) => a.localeCompare(b));
   }, [sensores]);
 
-  // Se o tipo escolhido sumiu depois de uma atualização, volta para "Todos".
+  
   const tipoAtivo = tipos.some((t) => normalizar(t) === normalizar(tipoSelecionado))
     ? tipoSelecionado
     : TODOS;

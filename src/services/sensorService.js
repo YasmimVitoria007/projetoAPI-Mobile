@@ -1,5 +1,3 @@
-// Camada de comunicação com o backend. Nenhuma tela chama fetch diretamente.
-
 export const API_BASE_URL = 'http://10.137.11.6/api';
 const TIMEOUT_MS = 10000;
 
@@ -11,7 +9,7 @@ export class ApiError extends Error {
   }
 }
 
-// A API devolve status como 1/0; o app trabalha com boolean.
+
 const paraBoolean = (valor) => valor === 1 || valor === true || valor === '1';
 
 async function request(path, options = {}) {
@@ -58,7 +56,7 @@ async function request(path, options = {}) {
   return dados;
 }
 
-// GET /sensor/status/listar -> { success, data: [{ codigo, tipo, status }] }
+
 export async function listarSensores() {
   const dados = await request('/sensor/status/listar');
   if (!dados || !Array.isArray(dados.data)) {
@@ -73,8 +71,7 @@ export async function listarSensores() {
     }));
 }
 
-// GET /sensor/status/visualizar/:codigo -> { success, status }
-// Atenção: esta rota retorna só o status, sem codigo/tipo.
+
 export async function visualizarSensor(codigo) {
   const dados = await request(`/sensor/status/visualizar/${encodeURIComponent(codigo)}`);
   if (!dados || dados.status === undefined) {
@@ -83,7 +80,6 @@ export async function visualizarSensor(codigo) {
   return { codigo, status: paraBoolean(dados.status) };
 }
 
-// PUT /sensor/status/atualizar  body: { codigo, status: boolean }
 export async function atualizarStatusSensor({ codigo, status }) {
   return request('/sensor/status/atualizar', {
     method: 'PUT',

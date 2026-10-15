@@ -5,7 +5,6 @@ import {
 import { visualizarSensor, atualizarStatusSensor } from '../services/sensorService';
 
 export default function SensorDetailsScreen({ route, navigation }) {
-  // A rota /visualizar só devolve o status; codigo e tipo vêm da lista.
   const { sensor: sensorInicial } = route.params;
   const { codigo, tipo } = sensorInicial;
 
@@ -37,11 +36,11 @@ export default function SensorDetailsScreen({ route, navigation }) {
     setErro(null);
     try {
       await atualizarStatusSensor({ codigo, status: novoValor });
-      // Confirma o estado real no backend em vez de presumir o resultado do PUT.
+      
       const confirmado = await visualizarSensor(codigo);
       setStatus(confirmado.status);
     } catch (e) {
-      // O Switch é controlado pelo estado, então permanece no valor anterior.
+     
       setErro(`Não foi possível alterar o sensor. ${e.message}`);
     } finally {
       setAtualizando(false);
